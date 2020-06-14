@@ -24,5 +24,13 @@ namespace TimeTable
         {
             InitializeComponent();
         }
+
+        public void UpdateWindow(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+
     }
 }

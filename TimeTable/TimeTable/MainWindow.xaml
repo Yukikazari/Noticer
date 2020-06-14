@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTable"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="TimeTable" Height="400" Width="600" >
+    <StackPanel x:Name="parent" xml:space="preserve" Margin="0" Background="#FFF0F0F0">
+        <Menu Grid.ColumnSpan="3">
+            <MenuItem Header="操作">
+                <MenuItem Header="更新"/>
+                <MenuItem Header="取り消し"/>
+            </MenuItem>
+            <MenuItem Header="設定">
+                <MenuItem Header="設定"/>
+                <MenuItem Header="時間割編集"/>
+            </MenuItem>
+            <MenuItem Header="ヘルプ">
+                <MenuItem Header="使い方"/>
+                <MenuItem Header="バージョン情報"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel x:Name="lecture">
+                <!--最後に消します-->
+                <GroupBox Header="今日" FontSize="15">
+                     <StackPanel x:Name="today" Orientation="Horizontal" Margin="0,5">
+                        <Button Content="数値計算&#10;Classroom&#10;オンデマンド" Margin="5,0,0,0" Width="100" Height="70" Template="{StaticResource ButtonTemplate}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--ここまで-->
+            </StackPanel>
+            <StackPanel x:Name="tasks">
+                <GroupBox Header="課題" FontSize="15">
+                    <StackPanel x:Name="task" Orientation="Horizontal">
+                        <Button Content="数値計算&#10;レポート&#10;6/15 23:59" Margin="5,0,0,0" Width="100" Height="70" Template="{StaticResource ButtonTemplate}"/>
+                    </StackPanel> 
+                </GroupBox>
+
+            </StackPanel>
+        </StackPanel>
 </Window>

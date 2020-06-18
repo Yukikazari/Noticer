@@ -4,70 +4,76 @@
              xmlns:local="clr-namespace:TimeTable"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="Button" >
+        <Style  x:Key="ButtonTemplate" TargetType="Button" >
             <Setter Property="Background" Value="White" />
             <Setter Property="Foreground" Value="#FF056096" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!--角の丸みを取りたいためGridを使用-->
+                        <Grid x:Name="MyButton" Background="{TemplateBinding Background}">
+                            <!--ボタンの枠線-->
+                            <Border x:Name="MyBorder" BorderBrush="#1570A6" BorderThickness="1"/>
+                            <!--ボタン内のコンテンツ（テキストなど）-->
+                            <ContentPresenter x:Name="Presenter"
+                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                     Margin="5" />
+                            <!--各イベントで表示を変えたいためVisualStateManagerを使用する-->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <!--通常時（これが無いとマウスが外れても表示が戻らない）-->
+                                    <VisualState Name="Normal" />
+                                    <!--マウスオーバー時-->
+                                    <VisualState Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="MyButton"
+                                                   Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                   Duration="00:00:00.1"
+                                                   To="#1570A6" />
+                                            <ColorAnimation Storyboard.TargetName="Presenter"
+                                                   Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                   Duration="00:00:00.1"
+                                                   To="white" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--ボタン押下時-->
+                                    <VisualState Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="MyButton"
+                                                   Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                   Duration="00:00:00.1"
+                                                   To="#2580B6" />
+                                            <ColorAnimation Storyboard.TargetName="Presenter"
+                                                   Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                   Duration="00:00:00.1"
+                                                   To="white" />
+                                            <ThicknessAnimation Storyboard.TargetName="MyButton"
+                                                        Storyboard.TargetProperty="Margin"
+                                                        Duration="00:00:00.1"
+                                                        To="0,0,0,0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--ボタン無効化時-->
+                                    <VisualState Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="MyBorder"
+                                                   Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
+                                                   To="Gray"/>
+                                            <ColorAnimation Storyboard.TargetName="Presenter"
+                                                   Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                   To="Gray"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>                
+                </Setter.Value>                
+            </Setter>
+
         </Style>
         <!--フラットボタン用のコントロールテンプレート-->
-        <ControlTemplate  x:Key="ButtonTemplate" TargetType="Button">
-            <!--角の丸みを取りたいためGridを使用-->
-            <Grid x:Name="MyButton" Background="{TemplateBinding Background}">
-                <!--ボタンの枠線-->
-                <Border x:Name="MyBorder" BorderBrush="#1570A6" BorderThickness="1"/>
-                <!--ボタン内のコンテンツ（テキストなど）-->
-                <ContentPresenter x:Name="Presenter"
-                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                         Margin="5" />
-                <!--各イベントで表示を変えたいためVisualStateManagerを使用する-->
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup Name="CommonStates">
-                        <!--通常時（これが無いとマウスが外れても表示が戻らない）-->
-                        <VisualState Name="Normal" />
-                        <!--マウスオーバー時-->
-                        <VisualState Name="MouseOver">
-                            <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="MyButton"
-                                       Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                       Duration="00:00:00.1"
-                                       To="#1570A6" />
-                                <ColorAnimation Storyboard.TargetName="Presenter"
-                                       Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                       Duration="00:00:00.1"
-                                       To="white" />
-                            </Storyboard>
-                        </VisualState>
-                        <!--ボタン押下時-->
-                        <VisualState Name="Pressed">
-                            <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="MyButton"
-                                       Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                       Duration="00:00:00.1"
-                                       To="#2580B6" />
-                                <ColorAnimation Storyboard.TargetName="Presenter"
-                                       Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                       Duration="00:00:00.1"
-                                       To="white" />
-                                <ThicknessAnimation Storyboard.TargetName="MyButton"
-                                            Storyboard.TargetProperty="Margin"
-                                            Duration="00:00:00.1"
-                                            To="0,0,0,0" />
-                            </Storyboard>
-                        </VisualState>
-                        <!--ボタン無効化時-->
-                        <VisualState Name="Disabled">
-                            <Storyboard>
-                                <ColorAnimation Storyboard.TargetName="MyBorder"
-                                       Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
-                                       To="Gray"/>
-                                <ColorAnimation Storyboard.TargetName="Presenter"
-                                       Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                       To="Gray"/>
-                            </Storyboard>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Grid>
-        </ControlTemplate>
+
     </Application.Resources>
 </Application>

@@ -6,8 +6,24 @@ using System.Threading.Tasks;
 
 namespace TimeTable
 {
-    public class Lectures
+    public class Data
     {
+        public TimetableSetting setting { get; set; }
+
+        public List<Lecture> lectures { get; set; }
+
+        public List<Task> tasks { get; set; }
+
+    }
+
+    public class TimetableSetting
+    {
+
+    }
+
+    public class Lecture
+    {
+        // IDは被らないようにする！方法は未定！ 削除しながらやると思うからLastIDとかで保持する方法にするかも！
         public string id { get; set; }
 
         public string name { get; set; }
@@ -33,7 +49,7 @@ namespace TimeTable
         public string date { get; set; }
     }
 
-    public class Tasks
+    public class Task
     {
         public string id { get; set; }
 

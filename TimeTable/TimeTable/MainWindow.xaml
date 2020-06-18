@@ -25,7 +25,7 @@
                 <!--最後に消します-->
                 <GroupBox Header="今日" FontSize="15">
                      <StackPanel x:Name="today" Orientation="Horizontal" Margin="0,5">
-                        <Button Content="数値計算&#10;Classroom&#10;オンデマンド" Margin="5,0,0,0" Width="100" Height="70" Template="{StaticResource ButtonTemplate}"/>
+                        <Button Content="数値計算&#10;Classroom&#10;オンデマンド" Margin="5,0,0,0" Width="100" Height="70" Style="{StaticResource ButtonTemplate}"/>
                     </StackPanel>
                 </GroupBox>
 
@@ -34,7 +34,7 @@
             <StackPanel x:Name="tasks">
                 <GroupBox Header="課題" FontSize="15">
                     <StackPanel x:Name="task" Orientation="Horizontal">
-                        <Button Content="数値計算&#10;レポート&#10;6/15 23:59" Margin="5,0,0,0" Width="100" Height="70" Template="{StaticResource ButtonTemplate}"/>
+                        <Button Content="数値計算&#10;レポート&#10;6/15 23:59" Margin="5,0,0,0" Width="100" Height="70" Style="{StaticResource ButtonTemplate}"/>
                     </StackPanel> 
                 </GroupBox>
 

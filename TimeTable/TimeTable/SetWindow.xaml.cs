@@ -30,6 +30,7 @@ namespace TimeTable
         }
 
         private SetViewModel _viewModel;
+        public bool IsChange = false;
 
         void SetWindowConf()
         {
@@ -74,16 +75,37 @@ namespace TimeTable
 
             _viewModel.obj_day_en = tmp;
 
-            
-
             this.DataContext = _viewModel;
+        }
+
+        private void DecisionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.data.setting.period = _viewModel.period;
+            MainWindow.data.setting.day_st = _viewModel.day_st;
+            MainWindow.data.setting.day_en = _viewModel.day_en;
+            MainWindow.data.setting.timer_music = _viewModel.timer_music;
+            MainWindow.data.setting.display_mon = _viewModel.display_mon;
+            MainWindow.data.setting.display_tue = _viewModel.display_tue;
+            MainWindow.data.setting.display_wed = _viewModel.display_wed;
+            MainWindow.data.setting.display_thu = _viewModel.display_thu;
+            MainWindow.data.setting.display_fri = _viewModel.display_fri;
+            MainWindow.data.setting.display_sat = _viewModel.display_sat;
+
+            IsChange = true;
+            Close();
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         Obj_Combobox CreateObj(int id_in, string name_in)
         {
             var o = new Obj_Combobox()
             {
-                id = id_in, name = name_in
+                id = id_in,
+                name = name_in
             };
 
             return o;

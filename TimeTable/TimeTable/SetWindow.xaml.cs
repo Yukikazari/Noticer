@@ -34,9 +34,7 @@ namespace TimeTable
 
         void SetWindowConf()
         {
-            // TimetableSetting set = MainWindow.data.setting;
-
-            TimetableSetting set = new TimetableSetting();
+            TimetableSetting set = MainWindow.data.setting;
 
             _viewModel.period = set.period;
 

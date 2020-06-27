@@ -12,7 +12,7 @@
                 <MenuItem Header="更新"/>
                 <MenuItem Header="取り消し"/>
             </MenuItem>
-            <MenuItem Header="設定">
+            <MenuItem Header="設定" Click="MenuItem_Setting_Click">
                 <MenuItem Header="設定"/>
                 <MenuItem Header="時間割編集"/>
             </MenuItem>

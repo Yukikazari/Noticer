@@ -25,7 +25,7 @@ namespace TimeTable.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
         public double WindowWidth {
             get {
                 return ((double)(this["WindowWidth"]));
@@ -37,7 +37,7 @@ namespace TimeTable.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
         public double WindowHeight {
             get {
                 return ((double)(this["WindowHeight"]));

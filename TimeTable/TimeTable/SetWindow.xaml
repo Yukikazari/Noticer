@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <Label Content="表示する時限数" Grid.Row="0" Grid.Column="0"/>
-        <TextBox x:Name="period" Text="{Binding Path=period, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="0" Grid.Column="1" Margin="5,3"/>
+        <TextBox x:Name="period" Text="{Binding Path=period, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="0" Grid.Column="1" Margin="5,3" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="period_PreviewTextInput" CommandManager.PreviewCanExecute="period_PreviewCanExecute"/>
 
         <Label Content="講義を表示する日数" Grid.Row="1" Grid.Column="0"/>
         <Grid Grid.Row="1" Grid.Column="1" Margin="5,3">
@@ -35,15 +35,15 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox x:Name="day_st" ItemsSource="{Binding Path=obj_day_st}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="0"/>
+            <ComboBox x:Name="day_st" SelectedValue="{Binding Path=day_st, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_day_st}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="0"/>
             <Label Content="から" Grid.Column="1"/>
-            <ComboBox x:Name="day_en" ItemsSource="{Binding Path=obj_day_en}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="3"/>
+            <ComboBox x:Name="day_en" SelectedValue="{Binding Path=day_en, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_day_en}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="3"/>
 
 
         </Grid>
 
         <Label Content="タイマー音" Grid.Row="2" Grid.Column="0"/>
-        <TextBox x:Name="timer_music" Grid.Row="2" Grid.Column="1" Margin="5,3"/>
+        <TextBox x:Name="timer_music" Text="{Binding Path=timer_music, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5,3"/>
 
         <Label Content="各曜日の表示" Grid.Row="3" Grid.Column="0"/>
         <Grid Grid.Row="3" Grid.Column="1" Margin="5,3">
@@ -53,7 +53,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="月" Grid.Column="0"/>
-            <ComboBox x:Name="display_mon" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="1"/>
+            <ComboBox x:Name="display_mon" SelectedValue="{Binding Path=display_mon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="tf" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="1" Margin="5,3">
             <Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="火" Grid.Column="0"/>
-            <ComboBox x:Name="display_tue" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="1"/>
+            <ComboBox x:Name="display_tue" SelectedValue="{Binding Path=display_tue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="tf" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="5" Grid.Column="1" Margin="5,3">
             <Grid.ColumnDefinitions>
@@ -71,7 +71,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="水" Grid.Column="0"/>
-            <ComboBox x:Name="display_wed" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="1"/>
+            <ComboBox x:Name="display_wed" SelectedValue="{Binding Path=display_wed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="tf" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="6" Grid.Column="1" Margin="5,3">
             <Grid.ColumnDefinitions>
@@ -80,7 +80,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="木" Grid.Column="0"/>
-            <ComboBox x:Name="display_thu" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="1"/>
+            <ComboBox x:Name="display_thu" SelectedValue="{Binding Path=display_thu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="tf" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="7" Grid.Column="1" Margin="5,3">
             <Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="金" Grid.Column="0"/>
-            <ComboBox x:Name="display_fri" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="1"/>
+                <ComboBox x:Name="display_fri" SelectedValue="{Binding Path=display_fri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="tf" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="8" Grid.Column="1" Margin="5,3">
             <Grid.ColumnDefinitions>
@@ -98,7 +98,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="土" Grid.Column="0"/>
-            <ComboBox x:Name="display_sat" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="id" Grid.Column="1"/>
+            <ComboBox x:Name="display_sat" SelectedValue="{Binding Path=display_sat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_tf}" DisplayMemberPath="name" SelectedValuePath="tf" Grid.Column="1"/>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="9">

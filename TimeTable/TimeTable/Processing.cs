@@ -18,11 +18,17 @@ namespace TimeTable
 
         public List<Task> tasks { get; set; }
 
+        public Data()
+        {
+            var set = new TimetableSetting();
+            this.setting = set;
+        }
+
     }
 
     public class TimetableSetting
     {
-        public string period { get; set; }
+        public int period { get; set; }
 
         public int day_st { get; set; }
 
@@ -40,6 +46,20 @@ namespace TimeTable
         public bool display_fri { get; set; }
 
         public bool display_sat { get; set; }
+
+        public TimetableSetting()
+        {
+            this.period = 8;
+            this.day_st = 0;
+            this.day_en = 0;
+            this.timer_music = "./elise.mp3";
+            this.display_mon = true;
+            this.display_tue = true;
+            this.display_wed = true;
+            this.display_thu = true;
+            this.display_fri = true;
+            this.display_sat = true;
+        }
     }
 
     public class Lecture
@@ -84,7 +104,7 @@ namespace TimeTable
     public class SetViewModel : INotifyPropertyChanged
     {
 
-        private string _period; // 時限
+        private int _period; // 時限
         private int _day_st; // いつから
         private int _day_en; // いつまで。IDで入れとく予定。方法はわからん
         private string _timer_music; // タイマー音
@@ -99,7 +119,7 @@ namespace TimeTable
         public List<Obj_Combobox> _obj_day_st;
         public List<Obj_Combobox> _obj_day_en;
 
-        public string period
+        public int period
         {
             get { return this._period; }
             set
@@ -239,6 +259,7 @@ namespace TimeTable
 
     public class Obj_Combobox
     {
+        public bool tf { get; set; }
         public int id { get; set; }
         public string name { get; set; }
     }

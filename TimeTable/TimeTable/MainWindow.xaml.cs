@@ -45,8 +45,11 @@ namespace TimeTable
 
             }
 
-            var sw = new SetWindow();
-            sw.ShowDialog();
+            XmlSerializer serializer1 = new XmlSerializer(typeof(Data));
+            using(FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "\\" + "Data.xml", FileMode.Create))
+            {
+                serializer1.Serialize(fs, data);
+            }
         }
 
         public void UpdateWindow(object sender, RoutedEventArgs e)
@@ -146,6 +149,17 @@ namespace TimeTable
             windowset.WindowWidth = Width;
             windowset.WindowHeight = Height;
             windowset.Save();
+        }
+
+        private void MenuItem_Setting_Click(object sender, RoutedEventArgs e)
+        {
+            var sw = new SetWindow();
+            sw.ShowDialog();
+
+            if (sw.IsChange)
+            {
+                // 変更処理が必要なら入れる
+            }
         }
     }
 }

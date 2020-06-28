@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTable"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="TimeTable" Height="400" Width="600" >
     <StackPanel x:Name="parent" xml:space="preserve" Margin="0" Background="#FFF0F0F0">
         <Menu Grid.ColumnSpan="3">
@@ -12,9 +13,9 @@
                 <MenuItem Header="更新"/>
                 <MenuItem Header="取り消し"/>
             </MenuItem>
-            <MenuItem Header="設定" Click="MenuItem_Setting_Click">
-                <MenuItem Header="設定"/>
-                <MenuItem Header="時間割編集"/>
+            <MenuItem Header="設定">
+                <MenuItem Header="設定" Click="MenuItem_Setting_Click"/>
+                <MenuItem Header="時間割編集" Click="MenuItem_TimeTable_Click"/>
             </MenuItem>
             <MenuItem Header="ヘルプ">
                 <MenuItem Header="使い方"/>
@@ -31,11 +32,11 @@
 
                 <!--ここまで-->
             </StackPanel>
-            <StackPanel x:Name="tasks">
-                <GroupBox Header="課題" FontSize="15">
-                    <StackPanel x:Name="task" Orientation="Horizontal">
+            <StackPanel>
+                <GroupBox x:Name="tasks_group" Header="課題" FontSize="15">
+                    <WrapPanel x:Name="tasks_panel" Orientation="Horizontal">
                         <Button Content="数値計算&#10;レポート&#10;6/15 23:59" Margin="5,0,0,0" Width="100" Height="70" Style="{StaticResource ButtonTemplate}"/>
-                    </StackPanel> 
+                    </WrapPanel> 
                 </GroupBox>
 
             </StackPanel>

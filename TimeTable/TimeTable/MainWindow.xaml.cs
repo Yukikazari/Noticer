@@ -50,11 +50,16 @@ namespace TimeTable
             {
                 serializer1.Serialize(fs, data);
             }
+
+            CreateLecturePanel();
+            CreateTaskPanel();
         }
 
         public void UpdateWindow(object sender, RoutedEventArgs e)
         {
             // 更新ボタン押した時のヤツ。日付変更を想定
+            CreateLecturePanel();
+            CreateTaskPanel();
         }
 
         void RecoverWindowBounds()
@@ -81,11 +86,31 @@ namespace TimeTable
         void CreateLecturePanel()
         {
             // 日付別で出す奴。for文っすかね
+
         }
 
         void CreateTaskPanel()
         {
             // こっちは適当に taskの子要素にButton増やすだけ
+            tasks_panel.Children.Clear();
+
+            if(data.tasks!= null)
+            {
+                foreach(var item in data.tasks)
+                {
+                    var btn = new Button();
+
+                    btn.Name = "Btn" + item.id.ToString();
+                    btn.Click += (sender, e) => PushTaskButton(sender, e);
+                    btn.Content = item.lecture + "&#10;" + item.name + "&#10;" + item.time;
+                    btn.Style = FindResource("ButtonTemplate") as Style;
+                    btn.Margin = new Thickness(5, 0, 0, 0);
+                    btn.Width = 100;
+                    btn.Height = 70;
+
+                    tasks_panel.Children.Add(btn);
+                }
+            }
         }
 
         void PushLectureButton(object sender, RoutedEventArgs e)
@@ -108,14 +133,9 @@ namespace TimeTable
             // 講義の方のボタン押されたとき 右クリック
         }
 
-        void PushLeftTaskButton(object sender)
+        void PushTaskButton(object sender)
         {
             // 課題の方のボタン押されたとき 左クリック
-        }
-
-        void PushRightTaskButton(object sender)
-        {
-            // 課題の方のボタン押されたとき 右クリック
         }
 
         void PushLectureFinishButton(object sender, RoutedEventArgs e)
@@ -159,7 +179,15 @@ namespace TimeTable
             if (sw.IsChange)
             {
                 // 変更処理が必要なら入れる
+
+
+                CreateLecturePanel();
             }
+        }
+
+        private void MenuItem_TimeTable_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -53,6 +53,9 @@ namespace TimeTable
 
             CreateLecturePanel();
             CreateTaskPanel();
+
+            var tw = new TimeTableWindow();
+            tw.Show();
         }
 
         public void UpdateWindow(object sender, RoutedEventArgs e)

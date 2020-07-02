@@ -3,10 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TimeTable"
+        xmlns:custom="clr-namespace:TimeTable"
         mc:Ignorable="d"
-        Title="時間割設定" Height="450" Width="800">
-    <Grid>
-        
+        Title="時間割設定" Height="600
+        " Width="799.8">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="TablePanel">
+                <custom:RuledLineGrid  x:Name="TableGrid">
+                    <custom:RuledLineGrid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="1*"/>
+                    </custom:RuledLineGrid.ColumnDefinitions>
+
+                    <custom:RuledLineGrid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="50"/>
+                    </custom:RuledLineGrid.RowDefinitions>
+
+                    <Label Content="月" Grid.Column="1" HorizontalAlignment="Center"/>
+
+                </custom:RuledLineGrid>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

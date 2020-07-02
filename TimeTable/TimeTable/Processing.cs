@@ -12,6 +12,12 @@ namespace TimeTable
 {
     public class Data
     {
+        public List<List<int>> lectid { get; set; }
+
+        public List<int> taskid { get; set; }
+
+        public List<LectTime> lecttime { get; set; }
+
         public TimetableSetting setting { get; set; }
 
         public List<Lecture> lectures { get; set; }
@@ -101,9 +107,18 @@ namespace TimeTable
         public string time { get; set; }
     }
 
-    public class SetViewModel : INotifyPropertyChanged
+    public class LectTime
     {
 
+        public int starthour { get; set; }
+        public int startminute { get; set; }
+        public int endhour { get; set; }
+        public int endminute { get; set; }
+    }
+
+    public class SetViewModel : INotifyPropertyChanged
+    {
+        #region TmpItems
         private int _period; // 時限
         private int _day_st; // いつから
         private int _day_en; // いつまで。IDで入れとく予定。方法はわからん
@@ -119,6 +134,9 @@ namespace TimeTable
         public List<Obj_Combobox> _obj_day_st;
         public List<Obj_Combobox> _obj_day_en;
 
+        #endregion
+
+        #region processing
         public int period
         {
             get { return this._period; }
@@ -249,6 +267,7 @@ namespace TimeTable
             }
         }
 
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged = null;
         protected void OnPropertyChanged(string info)

@@ -32,11 +32,6 @@
                     </custom:RuledLineGrid.RowDefinitions>
 
                     <Label Content="月" Grid.Column="1" HorizontalAlignment="Center"/>
-                    <Label Content="火" Grid.Column="2" HorizontalAlignment="Center"/>
-                    <Label Content="水" Grid.Column="3" HorizontalAlignment="Center"/>
-                    <Label Content="木" Grid.Column="4" HorizontalAlignment="Center"/>
-                    <Label Content="金" Grid.Column="5" HorizontalAlignment="Center"/>
-                    <Label Content="土" Grid.Column="6" HorizontalAlignment="Center"/>
 
                 </custom:RuledLineGrid>
             </StackPanel>

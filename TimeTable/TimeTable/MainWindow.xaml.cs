@@ -105,7 +105,7 @@ namespace TimeTable
 
                     btn.Name = "Btn" + item.id.ToString();
                     btn.Click += (sender, e) => PushTaskButton(sender, e);
-                    btn.Content = item.lecture + "&#10;" + item.name + "&#10;" + item.time;
+                    btn.Content = String.Format("{0}\n{1}\n{2}", item.lecture, item.name, item.time);
                     btn.Style = FindResource("ButtonTemplate") as Style;
                     btn.Margin = new Thickness(5, 0, 0, 0);
                     btn.Width = 100;

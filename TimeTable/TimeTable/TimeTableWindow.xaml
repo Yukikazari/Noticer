@@ -23,12 +23,10 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="1*"/>
                     </custom:RuledLineGrid.ColumnDefinitions>
 
                     <custom:RuledLineGrid.RowDefinitions>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="50"/>
                     </custom:RuledLineGrid.RowDefinitions>
 
                     <Label Content="月" Grid.Column="1" HorizontalAlignment="Center"/>

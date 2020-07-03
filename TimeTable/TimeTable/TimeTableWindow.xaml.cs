@@ -24,7 +24,7 @@ namespace TimeTable
             InitializeComponent();
 
             GetData();
-
+            CreateGrid();
         }
         // 講義数
         public int count;
@@ -44,6 +44,7 @@ namespace TimeTable
             lectures = data.lectures;
             lecttime = data.lecttime;
 
+
             int lec_c = lecttime.Count();
             if (lec_c != count)
             {
@@ -58,7 +59,7 @@ namespace TimeTable
                 }
                 else
                 {
-                    for (int i = 0; i < lec_c - count; i++)
+                    for (int i = 0; i < count - lec_c; i++)
                     {
                         var t = new LectTime();
                         t.starthour = 0;
@@ -70,14 +71,42 @@ namespace TimeTable
                 }
             }
 
-            if (lectid.Count != 6)
+            if (lectid.Count() != 6)
             {
-                // TODO データ型エラー時 月-土分の不足を追加
+                var lectid_c = lectid.Count();
+                // データ型エラー時 月-土分の不足を追加
+                for(int i = 0; i < 6 - lectid_c; i++)
+                {
+                    var t = new List<int>();
+                    t.Add(0);
+                    lectid.Add(t);
+                }
             }
 
-            foreach (var item in lectid)
+
+            for(int i = 0; i < 6; i++)
             {
+                var c = lectid[i].Count();
                 // TODO 講義数に揃える
+                if(c != count)
+                {
+                    if(c > count)
+                    {
+                        var item_tmp = new List<int>();
+                        for(int j = 0; j < count; j++)
+                        {
+                            item_tmp.Add(lectid[i][j]);
+                        }
+                        lectid[i] = item_tmp;
+                    }
+                    else
+                    {
+                        for(int j = 0; j < count - c; j++)
+                        {
+                            lectid[i].Add(0);
+                        }
+                    }
+                }
             }
         }
 
@@ -85,6 +114,38 @@ namespace TimeTable
         {
             var tablegrid = this.FindName("TableGrid") as RuledLineGrid;
 
+            for(int i = 0; i < count; i++)
+            {
+                var rowdef = new RowDefinition();
+                rowdef.Height = new GridLength(50);
+                tablegrid.RowDefinitions.Add(rowdef);
+            }
+            Console.WriteLine(lecttime.Count());
+
+            for(int row = 0; row < count; row++)
+            {
+                Console.WriteLine(row);
+                var btn_t = new Button();
+                btn_t.Content = ConnectTimeString(row, lecttime[row]);
+                btn_t.SetValue(RuledLineGrid.RowProperty, row + 1);
+                btn_t.SetValue(RuledLineGrid.ColumnProperty, 0);
+                btn_t.Style = FindResource("ButtonTemplate") as Style;
+                btn_t.Margin = new Thickness(1, 1, 1, 1);
+                tablegrid.Children.Add(btn_t);
+
+                for (int col = 0; col < 6; col++)
+                {
+                    var btn = new Button();
+                }
+            }
+
+            tablegrid.GridShaping();
+        }
+
+        string ConnectTimeString(int time, LectTime lecttime)
+        {
+            String res = String.Format("{0}\n{1}:{2:00}～{3}:{4:00}", time+1, lecttime.starthour, lecttime.startminute, lecttime.endhour, lecttime.endminute);
+            return res;
         }
     }
 }

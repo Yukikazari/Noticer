@@ -14,11 +14,8 @@ namespace TimeTable
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RuledLineGrid), new FrameworkPropertyMetadata(typeof(RuledLineGrid)));
         }
 
-
-        protected override void OnInitialized(EventArgs e)
+        public void GridShaping()
         {
-            base.OnInitialized(e);
-
             //罫線の太さはここで指定。
             var thickness = new GridLength(1);
 
@@ -86,5 +83,6 @@ namespace TimeTable
                 SetZIndex(rectangle, int.MinValue);
             }
         }
+
     }
 }

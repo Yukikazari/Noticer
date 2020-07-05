@@ -71,7 +71,7 @@ namespace TimeTable
     public class Lecture
     {
         // IDは被らないようにする！方法は未定！ 削除しながらやると思うからLastIDとかで保持する方法にするかも！
-        public string id { get; set; }
+        public int id { get; set; }
 
         public string name { get; set; }
 
@@ -98,7 +98,7 @@ namespace TimeTable
 
     public class Task
     {
-        public string id { get; set; }
+        public int id { get; set; }
 
         public string lecture { get; set; }
 
@@ -276,11 +276,89 @@ namespace TimeTable
         }
     }
 
+
     public class Obj_Combobox
     {
         public bool tf { get; set; }
         public int id { get; set; }
         public string name { get; set; }
+    }
+
+    public class SetTimeViewModel : INotifyPropertyChanged
+    {
+        private int _st_h;
+        private int _st_m;
+        private int _en_h;
+        private int _en_m;
+
+        public List<int> _obj_h;
+        public List<int> _obj_m;
+
+        public int st_h
+        {
+            get { return this._st_h; }
+            set
+            {
+                this._st_h = value;
+                this.OnPropertyChanged(nameof(st_h));
+            }
+        }
+
+        public int st_m
+        {
+            get { return this._st_m; }
+            set
+            {
+                this._st_m = value;
+                this.OnPropertyChanged(nameof(st_m));
+            }
+        }
+
+        public int en_h
+        {
+            get { return this._en_h; }
+            set
+            {
+                this._en_h = value;
+                this.OnPropertyChanged(nameof(en_h));
+            }
+        }
+
+        public int en_m
+        {
+            get { return this._en_m; }
+            set
+            {
+                this._en_m = value;
+                this.OnPropertyChanged(nameof(en_m));
+            }
+        }
+
+        public List<int> obj_h
+        {
+            get { return this._obj_h; }
+            set
+            {
+                this._obj_h = value;
+                this.OnPropertyChanged(nameof(obj_h));
+            }
+        }
+
+        public List<int> obj_m
+        {
+            get { return this._obj_m; }
+            set
+            {
+                this._obj_m = value;
+                this.OnPropertyChanged(nameof(obj_m));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = null;
+        protected void OnPropertyChanged(string info)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+        }
     }
 
 }

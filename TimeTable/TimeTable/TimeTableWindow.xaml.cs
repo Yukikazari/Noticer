@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace TimeTable
 {
@@ -25,7 +26,10 @@ namespace TimeTable
 
             GetData();
             CreateGrid();
+
+
         }
+
         // 講義数
         public int count;
         // 講義ID 二次元リスト
@@ -120,32 +124,87 @@ namespace TimeTable
                 rowdef.Height = new GridLength(50);
                 tablegrid.RowDefinitions.Add(rowdef);
             }
-            Console.WriteLine(lecttime.Count());
 
-            for(int row = 0; row < count; row++)
+            for (int period = 0; period < count; period++)
             {
-                Console.WriteLine(row);
                 var btn_t = new Button();
-                btn_t.Content = ConnectTimeString(row, lecttime[row]);
-                btn_t.SetValue(RuledLineGrid.RowProperty, row + 1);
+                btn_t.Content = ConnectTimeText(period, lecttime[period]);
+                btn_t.SetValue(RuledLineGrid.RowProperty, period + 1);
                 btn_t.SetValue(RuledLineGrid.ColumnProperty, 0);
                 btn_t.Style = FindResource("ButtonTemplate") as Style;
                 btn_t.Margin = new Thickness(1, 1, 1, 1);
+                btn_t.Name = String.Format("timebtn_{0}", period);
+                btn_t.Click += PushTimeButton;
                 tablegrid.Children.Add(btn_t);
 
-                for (int col = 0; col < 6; col++)
+                for (int dayoftheweek = 0; dayoftheweek < 6; dayoftheweek++)
                 {
                     var btn = new Button();
+                    if (lectid[dayoftheweek][period] != 0)
+                    {
+                        btn.Content = ConnectLectText(lectid[dayoftheweek][period]);
+                    }
+                    else
+                    {
+                        btn.Content = "未設定";
+                    }
+                    btn.SetValue(RuledLineGrid.RowProperty, period + 1);
+                    btn.SetValue(RuledLineGrid.ColumnProperty, dayoftheweek + 1);
+                    btn.Style = FindResource("ButtonTemplate") as Style;
+                    btn.Margin = new Thickness(1, 1, 1, 1);
+                    btn.Name = String.Format("lectbtn_{0}", dayoftheweek + period * 6);
+                    btn.Click += PushLectButton;
+                    tablegrid.Children.Add(btn);
                 }
             }
 
             tablegrid.GridShaping();
         }
 
-        string ConnectTimeString(int time, LectTime lecttime)
+        string ConnectTimeText(int time, LectTime lecttime)
         {
             String res = String.Format("{0}\n{1}:{2:00}～{3}:{4:00}", time+1, lecttime.starthour, lecttime.startminute, lecttime.endhour, lecttime.endminute);
             return res;
+        }
+
+        string ConnectLectText(int lectid)
+        {
+            var lecture = lectures.Find(m => m.id == lectid);
+            // 教科, 教授
+            var res = String.Format("{0}\n{1}", lecture.name, lecture.professor);
+            return res;
+        }
+
+        void PushTimeButton(object sender, RoutedEventArgs e)
+        {
+            // 講義時間の方のボタン
+            var btn = (Button)sender;
+            var name = btn.Name;
+            var sid = Regex.Replace(name, "[^0-9]", "");
+            var id = int.Parse(sid);
+
+            var win = new TimeTable_SetTimeWindow(id, lecttime[id]);
+            win.ShowDialog();
+
+            lecttime[id] = win.lecttime;
+            btn.Content = ConnectTimeText(id, lecttime[id]);
+        }
+
+        void PushLectButton(object sender, RoutedEventArgs e)
+        {
+            // 講義の方のボタン
+            var btn = (Button)sender;
+            var name = btn.Name;
+            var sid = Regex.Replace(name, "[^0-9]", "");
+            var id = int.Parse(sid);
+            int period = id / 6;
+            int dayoftheweek = id % 6;
+
+          //  var win = ;
+        }
+
+        void DecisionBtn_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

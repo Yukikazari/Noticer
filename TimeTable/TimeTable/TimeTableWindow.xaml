@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:custom="clr-namespace:TimeTable"
         mc:Ignorable="d"
-        Title="時間割設定" Height="600
-        " Width="799.8">
+        Title="時間割設定" Height="600" Width="800">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

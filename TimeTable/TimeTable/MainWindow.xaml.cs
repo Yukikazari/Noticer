@@ -40,15 +40,28 @@ namespace TimeTable
                     XmlSerializer serializer = new XmlSerializer(typeof(Data));
                     data = (Data)serializer.Deserialize(fs);
                 }
+
+                var lt = new Dictionary<int, Lecture>();
+
+                foreach(var obj in data.lectures_list)
+                {
+                    lt.Add(obj.id, obj);
+                }
+
+                data.lectures = lt;
+
+                var tt = new Dictionary<int, Task>();
+
+                foreach(var obj in data.tasks_list)
+                {
+                    tt.Add(obj.id, obj);
+                }
+
+                data.tasks = tt;
+
             } catch (FileNotFoundException e)
             {
 
-            }
-
-            XmlSerializer serializer1 = new XmlSerializer(typeof(Data));
-            using(FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "\\" + "Data.xml", FileMode.Create))
-            {
-                serializer1.Serialize(fs, data);
             }
 
             CreateLecturePanel();
@@ -103,9 +116,9 @@ namespace TimeTable
                 {
                     var btn = new Button();
 
-                    btn.Name = "Btn" + item.id.ToString();
+                    btn.Name = "Btn" + item.Value.id.ToString();
                     btn.Click += (sender, e) => PushTaskButton(sender, e);
-                    btn.Content = String.Format("{0}\n{1}\n{2}", item.lecture, item.name, item.time);
+                    btn.Content = String.Format("{0}\n{1}\n{2}", item.Value.lecture, item.Value.name, item.Value.time);
                     btn.Style = FindResource("ButtonTemplate") as Style;
                     btn.Margin = new Thickness(5, 0, 0, 0);
                     btn.Width = 100;

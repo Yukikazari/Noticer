@@ -7,11 +7,13 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace TimeTable
 {
     public class Data
     {
+        public int lastlectid { get; set; }
         public List<List<int>> lectid { get; set; }
 
         public List<int> taskid { get; set; }
@@ -20,14 +22,27 @@ namespace TimeTable
 
         public TimetableSetting setting { get; set; }
 
-        public List<Lecture> lectures { get; set; }
+        [XmlIgnore]
+        public Dictionary<int, Lecture> lectures { get; set; }
 
-        public List<Task> tasks { get; set; }
+        [XmlIgnore]
+        public Dictionary<int, Task> tasks { get; set; }
+
+        public List<Lecture> lectures_list { get; set; }
+
+        public List<Task> tasks_list { get; set; }
 
         public Data()
         {
             var set = new TimetableSetting();
             this.setting = set;
+            lecttime = new List<LectTime>();
+            lectid = new List<List<int>>();
+            taskid = new List<int>();
+            lectures = new Dictionary<int, Lecture>();
+            tasks = new Dictionary<int, Task>();
+            lectures_list = new List<Lecture>();
+            tasks_list = new List<Task>();
         }
 
     }
@@ -73,13 +88,19 @@ namespace TimeTable
         // IDは被らないようにする！方法は未定！ 削除しながらやると思うからLastIDとかで保持する方法にするかも！
         public int id { get; set; }
 
+        public int period { get; set; }
+
+        public int dayoftheweek { get; set; }
+
         public string name { get; set; }
 
         public string professor { get; set; }
 
+        public int continuous { get; set; }
+
         public string syllabus { get; set; }
 
-        public List<Lecture_URLs> otherurl { get; set; }
+        public List<string> otherurl { get; set; }
 
         public List<Lecture_Date> dates { get; set; }
     }
@@ -291,8 +312,8 @@ namespace TimeTable
         private int _en_h;
         private int _en_m;
 
-        public List<int> _obj_h;
-        public List<int> _obj_m;
+        private List<int> _obj_h;
+        private List<int> _obj_m;
 
         public int st_h
         {
@@ -361,4 +382,102 @@ namespace TimeTable
         }
     }
 
+    public class SetLectViewModel : INotifyPropertyChanged
+    {
+        private List<Lecture> _lect_tenp;
+
+        private string _name;
+        private string _professor;
+        private int _continuous;
+        private string _syllabus;
+        private string _otherurl1;
+        private string _otherurl2;
+        private string _otherurl3;
+
+        public List<Lecture> lect_tenp
+        {
+            get { return this._lect_tenp; }
+            set
+            {
+                this._lect_tenp = value;
+                this.OnPropertyChanged(nameof(lect_tenp));
+            }
+        }
+
+        public string name
+        {
+            get { return this._name; }
+            set
+            {
+                this._name = value;
+                this.OnPropertyChanged(nameof(name));
+            }
+        }
+
+        public string professor
+        {
+            get { return this._professor; }
+            set
+            {
+                this._professor = value;
+                this.OnPropertyChanged(nameof(professor));
+            }
+        }
+
+        public int continuous
+        {
+            get { return this._continuous; }
+            set
+            {
+                this._continuous = value;
+                this.OnPropertyChanged(nameof(continuous));
+            }
+        }
+
+        public string syllabus
+        {
+            get { return this._syllabus; }
+            set
+            {
+                this._syllabus = value;
+                this.OnPropertyChanged(nameof(syllabus));
+            }
+        }
+
+        public string otherurl1
+        {
+            get { return this._otherurl1; }
+            set
+            {
+                this._otherurl1 = value;
+                this.OnPropertyChanged(nameof(otherurl1));
+            }
+        }
+
+        public string otherurl2
+        {
+            get { return this._otherurl2; }
+            set
+            {
+                this._otherurl2 = value;
+                this.OnPropertyChanged(nameof(otherurl2));
+            }
+        }
+
+        public string otherurl3
+        {
+            get { return this._otherurl3; }
+            set
+            {
+                this._otherurl3 = value;
+                this.OnPropertyChanged(nameof(otherurl3));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = null;
+        protected void OnPropertyChanged(string info)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+        }
+    }
 }

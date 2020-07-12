@@ -35,7 +35,7 @@ namespace TimeTable
         // 講義ID 二次元リスト
         public List<List<int>> lectid;
         // 講義一覧
-        public List<Lecture> lectures;
+        public Dictionary<int, Lecture> lectures;
         // 開始.終了時間
         public List<LectTime> lecttime;
 
@@ -169,7 +169,7 @@ namespace TimeTable
 
         string ConnectLectText(int lectid)
         {
-            var lecture = lectures.Find(m => m.id == lectid);
+            var lecture = lectures[lectid];
             // 教科, 教授
             var res = String.Format("{0}\n{1}", lecture.name, lecture.professor);
             return res;
@@ -200,7 +200,19 @@ namespace TimeTable
             int period = id / 6;
             int dayoftheweek = id % 6;
 
-          //  var win = ;
+
+            var win = new TimeTable_SetLectWindow(dayoftheweek, period, lectid[dayoftheweek][period], lectures);
+            win.ShowDialog();
+
+            var obj = new Lecture();
+            // 元のidのやつが入ってるかの確認忘れてた
+
+            obj.id = dayoftheweek + period * 6 + 10;
+            lectid[dayoftheweek][period] = dayoftheweek + period * 6 + 10;
+
+
+
+
         }
 
         void DecisionBtn_Click(object sender, RoutedEventArgs e)

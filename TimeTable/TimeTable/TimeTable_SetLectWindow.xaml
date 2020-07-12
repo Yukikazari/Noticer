@@ -3,45 +3,69 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TimeTable"
         mc:Ignorable="d"
-        Title="講義設定" Height="300" Width="400">
-    <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
+        Closing="Window_Closing"
+        Title="講義設定" Height="350" Width="400">
+    <Grid Margin="20,20,20,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Label Content="開始時間" Grid.Row="0" Grid.Column="0"/>
-        <Grid Grid.Row="0" Grid.Column="1" Margin="0,2">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox x:Name="st_h" SelectedValue="{Binding Path=st_h, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_h}"  Grid.Column="0"/>
-            <Label Content="：" Grid.Column="1"/>
-            <ComboBox x:Name="st_m" SelectedValue="{Binding Path=st_m, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_m}" Grid.Column="3"/>
+            <Label Content="テンプレート" Grid.Column="0" HorizontalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Path=lect_tenp}" SelectedValuePath="id" DataContextChanged="ComboBox_DataContextChanged" Grid.Column="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding name, Mode=OneWay}"/><Run Text="/"/><Run Text="{Binding professor, Mode=OneWay}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </Grid>
-
-        <Label Content="終了時間" Grid.Row="1" Grid.Column="0"/>
-        <Grid Grid.Row="1" Grid.Column="1" Margin="0,2">
+        <Grid Grid.Row="1" Margin="0,10,0,0" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Label Content="講義名" Grid.Row="0" Grid.Column="0"/>
+            <TextBox Text="{Binding Path=name}" Grid.Row="0" Grid.Column="1" Margin="0,2"/>
 
-            <ComboBox x:Name="en_h" SelectedValue="{Binding Path=en_h, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_h}" Grid.Column="0"/>
-            <Label Content="：" Grid.Column="1"/>
-            <ComboBox x:Name="en_m" SelectedValue="{Binding Path=en_m, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=obj_m}" Grid.Column="3"/>
-        </Grid>
+            <Label Content="教授" Grid.Row="1" Grid.Column="0"/>
+            <TextBox Text="{Binding Path=professor}" Grid.Row="1" Grid.Column="1" Margin="0,2"/>
 
-        <Button Content="閉じる" Grid.Row="2" Grid.Column="1" Height="30" Margin="5,0" FontSize="20" Click="Button_Click"/>
+            <Label Content="連続講義時間数" Grid.Row="2" Grid.Column="0"/>
+            <TextBox Text="{Binding Path=continuous}" Grid.Row="2" Grid.Column="1" Margin="0,2"/>
+
+            <Label Content="シラバスURL" Grid.Row="3" Grid.Column="0"/>
+            <TextBox Text="{Binding Path=syllabus}" Grid.Row="3" Grid.Column="1" Margin="0,2"/>
+
+            <Label Content="講義ページ1" Grid.Row="4" Grid.Column="0"/>
+            <TextBox Text="{Binding Path=otherurl1}" Grid.Row="4" Grid.Column="1" Margin="0,2"/>
+
+            <Label Content="2" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center"/>
+            <TextBox Text="{Binding Path=otherurl2}" Grid.Row="5" Grid.Column="1" Margin="0,2"/>
+
+            <Label Content="3" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center"/>
+            <TextBox Text="{Binding Path=otherurl3}" Grid.Row="6" Grid.Column="1" Margin="0,2"/>
+
+            <Button Content="閉じる" Grid.Row="7" Grid.Column="1" Height="30" Margin="5,0,0,0" FontSize="20" Click="Button_Click" Width="120" HorizontalAlignment="Right"/>
+        </Grid>        
     </Grid>
+
 </Window>

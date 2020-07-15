@@ -174,6 +174,8 @@ namespace TimeTable
                 tablegrid.RowDefinitions.Add(rowdef);
             }
 
+            var condict = new Dictionary<int, int>();
+
             for (int period = 0; period < count; period++)
             {
                 var btn_t = new Button();
@@ -189,14 +191,30 @@ namespace TimeTable
                 for (int dayoftheweek = 0; dayoftheweek < 6; dayoftheweek++)
                 {
                     var btn = new Button();
-                    if (lectid[dayoftheweek][period] != 0 && lectures.ContainsKey(lectid[dayoftheweek][period]))
+                    if(condict.ContainsKey(dayoftheweek + period * 6))
                     {
-                        btn.Content = ConnectLectText(lectid[dayoftheweek][period]);
+                        btn.Content = ConnectLectText(condict[dayoftheweek + period * 6]);
+                        btn.IsEnabled = false;
                     }
                     else
                     {
-                        btn.Content = "未設定";
+                        if (lectid[dayoftheweek][period] != 0 && lectures.ContainsKey(lectid[dayoftheweek][period]))
+                        {
+                            btn.Content = ConnectLectText(lectid[dayoftheweek][period]);
+                            if(lectures[lectid[dayoftheweek][period]].continuous > 1)
+                            {
+                                for(int j = 1; j < lectures[lectid[dayoftheweek][period]].continuous; j++)
+                                {
+                                    condict[dayoftheweek + (period + j) * 6] = lectid[dayoftheweek][period];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            btn.Content = "未設定";
+                        }
                     }
+
                     btn.SetValue(RuledLineGrid.RowProperty, period + 1);
                     btn.SetValue(RuledLineGrid.ColumnProperty, dayoftheweek + 1);
                     btn.Style = FindResource("ButtonTemplate") as Style;

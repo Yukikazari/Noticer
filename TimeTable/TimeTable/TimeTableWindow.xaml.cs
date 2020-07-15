@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace TimeTable
 {
@@ -27,7 +29,7 @@ namespace TimeTable
             GetData();
             CreateGrid();
 
-
+            GetLectTemp();
         }
 
         // 講義数
@@ -38,6 +40,53 @@ namespace TimeTable
         public Dictionary<int, Lecture> lectures;
         // 開始.終了時間
         public List<LectTime> lecttime;
+
+        public static List<List<List<Lecture>>> lecttemp;
+
+        void GetLectTemp()
+        {
+            lecttemp = new List<List<List<Lecture>>>();
+
+            for(int i = 0; i < 6; i++)
+            {
+                var t1 = new List<List<Lecture>>();
+                for(int j = 0; j < MainWindow.data.setting.period; j++)
+                {
+                    var t2 = new List<Lecture>();
+                    t1.Add(t2);
+                }
+                lecttemp.Add(t1);
+            }
+
+            var fpath = @".\Data";
+
+            if (Directory.Exists(fpath))
+            {
+                var files = Directory.GetFiles(fpath, "*.xml");
+
+                foreach(var file in files)
+                {
+                    var tdata = new LectTemp();
+                    try
+                    {
+                        using (FileStream fs = new FileStream(file, FileMode.Open))
+                        {
+                            XmlSerializer serializer = new XmlSerializer(typeof(LectTemp));
+                            tdata = (LectTemp)serializer.Deserialize(fs);
+                        }
+
+                        foreach(var obj in tdata.lectures)
+                        {
+                            lecttemp[obj.dayoftheweek][obj.period].Add(obj);
+                        }
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                }
+            }
+        }
 
         void GetData()
         {
@@ -91,7 +140,7 @@ namespace TimeTable
             for(int i = 0; i < 6; i++)
             {
                 var c = lectid[i].Count();
-                // TODO 講義数に揃える
+                // 講義数に揃える
                 if(c != count)
                 {
                     if(c > count)
@@ -140,7 +189,7 @@ namespace TimeTable
                 for (int dayoftheweek = 0; dayoftheweek < 6; dayoftheweek++)
                 {
                     var btn = new Button();
-                    if (lectid[dayoftheweek][period] != 0)
+                    if (lectid[dayoftheweek][period] != 0 && lectures.ContainsKey(lectid[dayoftheweek][period]))
                     {
                         btn.Content = ConnectLectText(lectid[dayoftheweek][period]);
                     }
@@ -200,23 +249,83 @@ namespace TimeTable
             int period = id / 6;
             int dayoftheweek = id % 6;
 
+            var tablegrid = FindName("TableGrid") as RuledLineGrid;
+
+            if(lectid[dayoftheweek][period] != 0)
+            {
+                if (lectures[lectid[dayoftheweek][period]] != null)
+                {
+                    var con = lectures[lectid[dayoftheweek][period]].continuous;
+
+                    if(con > 1)
+                    {
+                        var nlist = new List<string>();
+                        for (int i = 1; i < con; i++)
+                        {
+                            var n = String.Format("lectbtn_{0}", id + i * 6);
+                            nlist.Add(n);
+                        }
+                        foreach (var btnobj in tablegrid.Children.OfType<Button>())
+                        {
+                            if (nlist.Contains(btnobj.Name))
+                            {
+                                btnobj.Content = "未設定";
+                                btnobj.IsEnabled = true;
+                            }
+                        }
+                    }
+                }
+            }
+
 
             var win = new TimeTable_SetLectWindow(dayoftheweek, period, lectid[dayoftheweek][period], lectures);
             win.ShowDialog();
 
             var obj = new Lecture();
-            // 元のidのやつが入ってるかの確認忘れてた
 
-            obj.id = dayoftheweek + period * 6 + 10;
-            lectid[dayoftheweek][period] = dayoftheweek + period * 6 + 10;
+            obj = win.lect;
 
+            if((obj.name!=null && obj.name != "") || (obj.professor!= null && obj.professor != ""))
+            {
+                obj.id = dayoftheweek + period * 6 + 10;
+                lectid[dayoftheweek][period] = dayoftheweek + period * 6 + 10;
+                lectures[obj.id] = obj;
 
+                btn.Content = ConnectLectText(obj.id);
+
+                if (obj.continuous != 1)
+                {
+                    var nlist = new List<string>();
+                    for(int i = 1; i < obj.continuous; i++)
+                    {
+                        var n = String.Format("lectbtn_{0}", id + i * 6);
+                        lectid[dayoftheweek][period + i] = 0;
+                        nlist.Add(n);
+                    }
+                    foreach(var btnobj in tablegrid.Children.OfType<Button>())
+                    {
+                        if(nlist.Contains(btnobj.Name))
+                        {
+                            btnobj.Content = ConnectLectText(obj.id);
+                            btnobj.IsEnabled = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                lectid[dayoftheweek][period] = 0;
+
+                btn.Content = "未設定";
+            }
 
 
         }
 
         void DecisionBtn_Click(object sender, RoutedEventArgs e)
         {
+            Close();
+
         }
     }
 }

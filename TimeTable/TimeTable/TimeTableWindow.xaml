@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:custom="clr-namespace:TimeTable"
         mc:Ignorable="d"
-        Title="時間割設定" Height="600" Width="800">
+        Title="時間割設定" Height="600" Width="780">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -38,5 +38,8 @@
                 </custom:RuledLineGrid>
             </StackPanel>
         </ScrollViewer>
+        <StackPanel Grid.Row="1">
+            <Button Content="閉じる" Click="DecisionBtn_Click" Width="120" HorizontalAlignment="Left" Height="40" Margin="560,0,0,0"/>
+        </StackPanel>
     </Grid>
 </Window>

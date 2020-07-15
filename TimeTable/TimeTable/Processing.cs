@@ -13,6 +13,8 @@ namespace TimeTable
 {
     public class Data
     {
+        public string version { get; set; }
+
         public int lastlectid { get; set; }
         public List<List<int>> lectid { get; set; }
 
@@ -103,6 +105,7 @@ namespace TimeTable
         public List<string> otherurl { get; set; }
 
         public List<Lecture_Date> dates { get; set; }
+
     }
 
     public class Lecture_URLs
@@ -135,6 +138,13 @@ namespace TimeTable
         public int startminute { get; set; }
         public int endhour { get; set; }
         public int endminute { get; set; }
+    }
+
+    public class LectTemp
+    {
+        public string version { get; set; }
+        public string name { get; set; }
+        public List<Lecture> lectures { get; set; }
     }
 
     public class SetViewModel : INotifyPropertyChanged

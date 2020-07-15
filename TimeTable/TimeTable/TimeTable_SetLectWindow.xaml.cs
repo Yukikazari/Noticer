@@ -31,6 +31,8 @@ namespace TimeTable
             _viewmodel = new SetLectViewModel();
             this.DataContext = _viewmodel;
 
+            _viewmodel.lect_tenp = TimeTableWindow.lecttemp[dayoftheweek][period];
+
             SetData();
         }
 
@@ -46,25 +48,35 @@ namespace TimeTable
         {
             if (lectid > 0)
             {
-                _viewmodel.name = lecture[lectid].name;
-                _viewmodel.professor = lecture[lectid].professor;
-                _viewmodel.continuous = lecture[lectid].continuous;
-                _viewmodel.syllabus = lecture[lectid].syllabus;
-                switch (lecture[lectid].otherurl.Count())
+                if (lecture.ContainsKey(lectid))
                 {
-                    case 3:
-                        _viewmodel.otherurl3 = lecture[lectid].otherurl[2];
-                        _viewmodel.otherurl2 = lecture[lectid].otherurl[1];
-                        _viewmodel.otherurl1 = lecture[lectid].otherurl[0];
-                        break;
-                    case 2:
-                        _viewmodel.otherurl2 = lecture[lectid].otherurl[1];
-                        _viewmodel.otherurl1 = lecture[lectid].otherurl[0];
-                        break;
-                    case 1:
-                        _viewmodel.otherurl1 = lecture[lectid].otherurl[0];
-                        break;
+                    _viewmodel.name = lecture[lectid].name;
+                    _viewmodel.professor = lecture[lectid].professor;
+                    _viewmodel.continuous = lecture[lectid].continuous;
+                    _viewmodel.syllabus = lecture[lectid].syllabus;
+                    if(lecture[lectid].otherurl != null)
+                    {
+                        switch (lecture[lectid].otherurl.Count())
+                        {
+                            case 3:
+                                _viewmodel.otherurl3 = lecture[lectid].otherurl[2];
+                                _viewmodel.otherurl2 = lecture[lectid].otherurl[1];
+                                _viewmodel.otherurl1 = lecture[lectid].otherurl[0];
+                                break;
+                            case 2:
+                                _viewmodel.otherurl2 = lecture[lectid].otherurl[1];
+                                _viewmodel.otherurl1 = lecture[lectid].otherurl[0];
+                                break;
+                            case 1:
+                                _viewmodel.otherurl1 = lecture[lectid].otherurl[0];
+                                break;
+                        }
+                    }
                 }
+            }
+            else
+            {
+                _viewmodel.continuous = 1;
             }
 
             // comboboxのデータ
@@ -78,7 +90,7 @@ namespace TimeTable
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -99,7 +111,6 @@ namespace TimeTable
             {
                 lect.otherurl.Add(_viewmodel.otherurl3);
             }
-
         }
     }
 }

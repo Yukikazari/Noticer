@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="講義設定" Height="350" Width="400">
+        Title="講義設定" Height="370" Width="400">
     <Grid Margin="20,20,20,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>

@@ -66,9 +66,6 @@ namespace TimeTable
 
             CreateLecturePanel();
             CreateTaskPanel();
-
-            var tw = new TimeTableWindow();
-            tw.Show();
         }
 
         public void UpdateWindow(object sender, RoutedEventArgs e)
@@ -166,6 +163,28 @@ namespace TimeTable
 
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            // バージョン設定
+            data.version = "1.0.0";
+
+
+            var lt = new List<Lecture>();
+
+            foreach (var obj in data.lectures)
+            {
+                lt.Add(obj.Value);
+            }
+
+            data.lectures_list = lt;
+
+            var tt = new List<Task>();
+
+            foreach (var obj in data.tasks)
+            {
+                tt.Add(obj.Value);
+            }
+
+            data.tasks_list = tt;
+
             XmlSerializer serializer = new XmlSerializer(typeof(Data));
 
             using (FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "\\" + "Data.xml", FileMode.Create))
@@ -203,7 +222,13 @@ namespace TimeTable
 
         private void MenuItem_TimeTable_Click(object sender, RoutedEventArgs e)
         {
+            var win = new TimeTableWindow();
+            win.ShowDialog();
 
+            data.lectures = win.lectures;
+            data.lectid = win.lectid;
+            data.lecttime = win.lecttime;
+        
         }
     }
 }

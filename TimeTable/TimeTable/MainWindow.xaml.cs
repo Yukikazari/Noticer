@@ -59,10 +59,8 @@ namespace TimeTable
 
                 data.tasks = tt;
 
-            } catch (FileNotFoundException e)
-            {
-
             }
+            catch (FileNotFoundException e){}
 
             CreateLecturePanel();
             CreateTaskPanel();
@@ -213,10 +211,15 @@ namespace TimeTable
 
             if (sw.IsChange)
             {
-                // 変更処理が必要なら入れる
+                var st = sw.set.day_st;
+                var en = sw.set.day_en;
 
+                data.setting = sw.set;
 
-                CreateLecturePanel();
+                if (data.setting.day_st != st || data.setting.day_en != en)
+                {
+                   CreateLecturePanel();
+                }
             }
         }
 

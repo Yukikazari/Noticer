@@ -30,12 +30,13 @@ namespace TimeTable
             SetWindowConf();
         }
 
+        public TimetableSetting set;
         private SetViewModel _viewModel;
         public bool IsChange = false;
 
         void SetWindowConf()
         {
-            var set = MainWindow.data.setting;
+            set = MainWindow.data.setting;
 
             
 
@@ -84,16 +85,16 @@ namespace TimeTable
 
         private void DecisionBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.data.setting.period = _viewModel.period;
-            MainWindow.data.setting.day_st = _viewModel.day_st;
-            MainWindow.data.setting.day_en = _viewModel.day_en;
-            MainWindow.data.setting.timer_music = _viewModel.timer_music;
-            MainWindow.data.setting.display_mon = _viewModel.display_mon;
-            MainWindow.data.setting.display_tue = _viewModel.display_tue;
-            MainWindow.data.setting.display_wed = _viewModel.display_wed;
-            MainWindow.data.setting.display_thu = _viewModel.display_thu;
-            MainWindow.data.setting.display_fri = _viewModel.display_fri;
-            MainWindow.data.setting.display_sat = _viewModel.display_sat;
+            set.period = _viewModel.period;
+            set.day_st = _viewModel.day_st;
+            set.day_en = _viewModel.day_en;
+            set.timer_music = _viewModel.timer_music;
+            set.display_mon = _viewModel.display_mon;
+            set.display_tue = _viewModel.display_tue;
+            set.display_wed = _viewModel.display_wed;
+            set.display_thu = _viewModel.display_thu;
+            set.display_fri = _viewModel.display_fri;
+            set.display_sat = _viewModel.display_sat;
 
             IsChange = true;
             Close();

@@ -34,8 +34,11 @@
             </StackPanel>
             <StackPanel>
                 <GroupBox x:Name="tasks_group" Header="課題" FontSize="15">
+
                     <WrapPanel x:Name="tasks_panel" Orientation="Horizontal">
+                        <!--ここも-->                        
                         <Button Content="数値計算&#10;レポート&#10;6/15 23:59" Margin="5,0,0,0" Width="100" Height="70" Style="{StaticResource ButtonTemplate}"/>
+                        
                     </WrapPanel> 
                 </GroupBox>
 

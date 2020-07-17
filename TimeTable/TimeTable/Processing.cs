@@ -102,6 +102,8 @@ namespace TimeTable
 
         public string syllabus { get; set; }
 
+        public string style { get; set; }
+
         public List<string> otherurl { get; set; }
 
         public List<Lecture_Date> dates { get; set; }

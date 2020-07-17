@@ -54,6 +54,20 @@ namespace TimeTable
                     _viewmodel.professor = lecture[lectid].professor;
                     _viewmodel.continuous = lecture[lectid].continuous;
                     _viewmodel.syllabus = lecture[lectid].syllabus;
+
+                    switch (lecture[lectid].style)
+                    {
+                        case "オンデマンド":
+                            style.SelectedIndex = 0;
+                            break;
+                        case "ライブ配信":
+                            style.SelectedIndex = 1;
+                            break;
+                        case "対面授業":
+                            style.SelectedIndex = 2;
+                            break;
+                    }
+
                     if(lecture[lectid].otherurl != null)
                     {
                         switch (lecture[lectid].otherurl.Count())
@@ -83,10 +97,6 @@ namespace TimeTable
 
             this.Title = String.Format("{0}曜{1}限","月火水木金土".Substring(dayoftheweek, 1), period+1);
         }
-        private void ComboBox_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -99,6 +109,7 @@ namespace TimeTable
             lect.professor = _viewmodel.professor;
             lect.continuous = _viewmodel.continuous;
             lect.syllabus = _viewmodel.syllabus;
+            lect.style = style.Text;
             if(_viewmodel.otherurl1 != null)
             {
                 lect.otherurl.Add(_viewmodel.otherurl1);
@@ -110,6 +121,45 @@ namespace TimeTable
             if (_viewmodel.otherurl3 != null)
             {
                 lect.otherurl.Add(_viewmodel.otherurl3);
+            }
+        }
+
+        private void style_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void temp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cb = (ComboBox)sender;
+            var nm = cb.SelectedIndex;
+
+            var obj = TimeTableWindow.lecttemp[dayoftheweek][period][nm];
+
+            _viewmodel.name = obj.name;
+            _viewmodel.professor = obj.professor;
+            _viewmodel.continuous = obj.continuous;
+            _viewmodel.syllabus = obj.syllabus;
+
+            style.SelectedItem = obj.style;
+
+            if (obj.otherurl != null)
+            {
+                switch (obj.otherurl.Count())
+                {
+                    case 3:
+                        _viewmodel.otherurl3 = obj.otherurl[2];
+                        _viewmodel.otherurl2 = obj.otherurl[1];
+                        _viewmodel.otherurl1 = obj.otherurl[0];
+                        break;
+                    case 2:
+                        _viewmodel.otherurl2 = obj.otherurl[1];
+                        _viewmodel.otherurl1 = obj.otherurl[0];
+                        break;
+                    case 1:
+                        _viewmodel.otherurl1 = obj.otherurl[0];
+                        break;
+                }
             }
         }
     }
